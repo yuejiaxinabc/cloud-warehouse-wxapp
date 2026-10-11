@@ -1,0 +1,30 @@
+<view class="login-wrap">
+  <view class="hero">
+    <view class="logo-icon">仓</view>
+    <view class="logo-title">云仓智能仓储管理平台</view>
+    <view class="logo-sub">扫码出入库 · 移动盘点</view>
+  </view>
+
+  <view class="form-card">
+    <view class="form-title">账号登录</view>
+
+    <view class="field">
+      <view class="input-row">
+        <text class="icon">👤</text>
+        <input class="input" placeholder="账号 / 邮箱 / 手机号" value="{{username}}" bindinput="onUserInput" />
+      </view>
+    </view>
+
+    <view class="field">
+      <view class="input-row">
+        <text class="icon">🔒</text>
+        <input class="input" password="{{!showPwd}}" placeholder="请输入密码" value="{{password}}" bindinput="onPwdInput" bindconfirm="handleLogin" />
+        <text class="eye" bindtap="togglePwd">{{showPwd ? '🙈' : '👁'}}</text>
+      </view>
+    </view>
+
+    <button class="login-btn" loading="{{loading}}" bindtap="handleLogin">登 录</button>
+  </view>
+
+  <view class="footer muted">登录账号与 Web 端一致</view>
+</view>

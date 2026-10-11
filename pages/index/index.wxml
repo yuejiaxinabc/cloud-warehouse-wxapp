@@ -1,0 +1,115 @@
+<view class="page">
+  <!-- 数据看板 -->
+  <view class="dash">
+    <!-- 顶部搜索 -->
+    <view class="top-search">
+      <view class="ts-input-wrap">
+        <text class="ts-icon">🔍</text>
+        <input class="ts-input" placeholder="搜名称 / 编码 / 批次号" placeholder-class="ts-ph" value="{{keyword}}" bindinput="onInput" confirm-type="search" bindconfirm="doSearch" />
+        <text class="ts-scan" bindtap="scanAndSearch">📷</text>
+      </view>
+      <button class="ts-btn" bindtap="doSearch">搜索</button>
+    </view>
+
+    <view class="stat-row">
+      <view class="stat">
+        <view class="stat-num">{{stats.totalQty || 0}}</view>
+        <view class="stat-label">库存总量</view>
+      </view>
+      <view class="stat">
+        <view class="stat-num">¥{{stats.totalValue || 0}}</view>
+        <view class="stat-label">库存货值</view>
+      </view>
+      <view class="stat">
+        <view class="stat-num">{{stats.totalItems || 0}}</view>
+        <view class="stat-label">库存条目</view>
+      </view>
+    </view>
+    <view class="pending-row">
+      <view class="pending-item" wx:if="{{pending.inbound > 0}}">待入 {{pending.inbound}}</view>
+      <view class="pending-item" wx:if="{{pending.outbound > 0}}">待出 {{pending.outbound}}</view>
+      <view class="pending-item" wx:if="{{pending.transfer > 0}}">待调 {{pending.transfer}}</view>
+      <view class="pending-item ok" wx:if="{{!pending.inbound && !pending.outbound && !pending.transfer}}">单据全部处理完毕</view>
+    </view>
+    <view class="quick-row">
+      <view class="quick-btn" bindtap="goPurchase">
+        <text class="q-icon">🛒</text>
+        <text>购买申请</text>
+      </view>
+      <view class="quick-btn" bindtap="goStockIn">
+        <text class="q-icon">📥</text>
+        <text>扫码入库</text>
+      </view>
+      <view class="quick-btn" bindtap="goStockOut">
+        <text class="q-icon">📤</text>
+        <text>扫码出库</text>
+      </view>
+      <view class="quick-btn" bindtap="goStocktake">
+        <text class="q-icon">📋</text>
+        <text>盘点</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 7日出入库趋势 -->
+  <view class="card">
+    <view class="section-title">近 7 日出入库（数量）</view>
+    <view class="trend-legend">
+      <text class="lg"><text class="dot in"></text>入库</text>
+      <text class="lg"><text class="dot out"></text>出库</text>
+      <text class="lg"><text class="dot tr"></text>调拨</text>
+    </view>
+    <view class="trend">
+      <view class="trend-col" wx:for="{{trend}}" wx:key="date">
+        <view class="bars">
+          <view class="bar in" style="height: {{item.inMax || 2}}rpx" wx:if="{{item.inbound > 0}}"></view>
+          <view class="bar out" style="height: {{item.outMax || 2}}rpx" wx:if="{{item.outbound > 0}}"></view>
+          <view class="bar tr" style="height: {{item.trMax || 2}}rpx" wx:if="{{item.transfer > 0}}"></view>
+        </view>
+        <view class="trend-date">{{item.date}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 仓库分布 -->
+  <view class="card" wx:if="{{warehouseValues.length > 0}}">
+    <view class="section-title">仓库分布</view>
+    <view wx:for="{{warehouseValues}}" wx:key="warehouseId" class="wh-row">
+      <view class="wh-name">{{item.name}}</view>
+      <view class="muted">{{item.products}} 条目 · {{item.totalQty}} 件</view>
+      <view class="wh-value">¥{{item.totalValue}}</view>
+    </view>
+  </view>
+
+  <!-- 库存查询结果 -->
+  <view wx:if="{{searched}}" class="result-head">
+    <text class="section-title" style="margin-bottom:0;">查询结果</text>
+    <text class="muted">{{items.length}} 条</text>
+  </view>
+
+  <view wx:if="{{searched && items.length === 0 && !loading}}" class="empty">
+    <text class="muted">未找到匹配的商品</text>
+  </view>
+
+  <view wx:for="{{items}}" wx:key="id" class="card item">
+    <view class="item-head">
+      <text class="item-name">{{item.name}}</text>
+      <text class="stock-num {{item.totalStock > 0 ? '' : 'danger'}}">{{item.totalStock}}</text>
+    </view>
+    <view class="item-meta muted">编码：{{item.code || '-'}}　型号：{{item.model || '-'}}</view>
+
+    <view wx:if="{{item.warehouses.length > 0}}" class="wh-list">
+      <view wx:for="{{item.warehouses}}" wx:for-item="w" wx:key="warehouseId" class="wh-tag">
+        <text>{{w.warehouseName}}</text><text class="wh-qty">{{w.onHand}}</text>
+      </view>
+    </view>
+
+    <view wx:if="{{item.lots.length > 0}}" class="lot-list">
+      <view class="section-title">批次</view>
+      <view wx:for="{{item.lots}}" wx:for-item="l" wx:key="lotNumber" class="lot-tag">
+        <text class="lot-no">{{l.lotNumber}}</text>
+        <text>{{l.warehouseName}}</text><text class="wh-qty">{{l.quantity}}</text>
+      </view>
+    </view>
+  </view>
+</view>

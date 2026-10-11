@@ -1,0 +1,35 @@
+.page { padding-bottom: 60rpx; }
+.picker {
+  background: #f5f7fa;
+  border-radius: 12rpx;
+  padding: 18rpx 24rpx;
+  font-size: 28rpx;
+  margin-bottom: 16rpx;
+}
+.picker.placeholder { color: #8a94a6; }
+
+.order-item {
+  border-bottom: 1rpx solid #eef2f7;
+  padding: 16rpx 0;
+}
+.order-item:last-child { border-bottom: none; }
+.o-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6rpx; }
+.o-no { font-size: 28rpx; font-weight: 600; }
+.o-status { font-size: 24rpx; color: #e6890f; }
+.o-status.st-DRAFT { color: #e6890f; }
+.o-status.st-COUNTING { color: #1677ff; }
+.o-status.st-ADJUSTED { color: #16a34a; }
+.o-status.success { color: #16a34a; }
+.link { color: #1677ff; font-size: 26rpx; }
+
+.ci-head { display: flex; justify-content: space-between; margin-bottom: 4rpx; }
+.ci-name { font-size: 28rpx; font-weight: 600; }
+.ci-row { display: flex; align-items: center; gap: 16rpx; margin-top: 12rpx; }
+.input {
+  background: #f5f7fa;
+  border-radius: 12rpx;
+  padding: 14rpx 20rpx;
+  font-size: 28rpx;
+}
+.input.qty { width: 220rpx; }
+.mini-btn { margin: 0; background: #1677ff; color: #fff; font-size: 24rpx; }

@@ -1,0 +1,33 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/stock-in/stock-in",
+    "pages/stock-out/stock-out",
+    "pages/stocktake/stocktake",
+    "pages/purchase/purchase",
+    "pages/mine/mine",
+    "pages/login/login"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#1677ff",
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "云仓智能仓储管理平台",
+    "backgroundColor": "#f5f7fa"
+  },
+  "tabBar": {
+    "color": "#8a94a6",
+    "selectedColor": "#1677ff",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      { "pagePath": "pages/index/index", "text": "首页" },
+      { "pagePath": "pages/stock-in/stock-in", "text": "入库" },
+      { "pagePath": "pages/stock-out/stock-out", "text": "出库" },
+      { "pagePath": "pages/stocktake/stocktake", "text": "盘点" },
+      { "pagePath": "pages/mine/mine", "text": "我的" }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

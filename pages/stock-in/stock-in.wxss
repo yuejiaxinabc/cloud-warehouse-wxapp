@@ -1,0 +1,94 @@
+.page { padding-bottom: 60rpx; }
+.card { position: relative; padding-top: 28rpx; }
+.step-tag {
+  position: absolute;
+  top: -14rpx; left: 24rpx;
+  width: 40rpx; height: 40rpx;
+  background: #1677ff;
+  color: #fff;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 40rpx;
+  font-size: 24rpx;
+  font-weight: 700;
+  box-shadow: 0 4rpx 10rpx rgba(22,119,255,0.35);
+}
+.section-title { margin-bottom: 18rpx; }
+
+.scan-row { display: flex; gap: 12rpx; align-items: center; margin-bottom: 16rpx; }
+.flex1 { flex: 1; }
+.input {
+  background: #f5f7fa;
+  border-radius: 12rpx;
+  padding: 18rpx 24rpx;
+  font-size: 28rpx;
+}
+.scan-btn {
+  margin: 0;
+  font-size: 26rpx;
+  padding: 0 22rpx;
+  line-height: 66rpx;
+  border-radius: 12rpx;
+  background: #e6f0ff; color: #1677ff;
+}
+.scan-btn.wide { flex: 1; line-height: 76rpx; }
+
+/* 搜索建议 */
+.suggest {
+  border: 1rpx solid #e6ebf2;
+  border-radius: 12rpx;
+  margin-bottom: 16rpx;
+  overflow: hidden;
+}
+.suggest-item { padding: 16rpx 20rpx; border-bottom: 1rpx solid #eef2f7; background: #fff; }
+.suggest-item:last-child { border-bottom: none; }
+.suggest-item:active { background: #f0f5ff; }
+.s-name { font-size: 28rpx; font-weight: 500; }
+.s-meta { margin-top: 4rpx; }
+
+.product-box {
+  background: #f0f5ff;
+  border-radius: 12rpx;
+  padding: 16rpx 20rpx;
+}
+.p-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4rpx; }
+.p-name { font-size: 30rpx; font-weight: 600; }
+.clear-btn { margin: 0; font-size: 22rpx; background: #fff; color: #8a94a6; }
+
+/* 数量步进 */
+.qty-row { display: flex; align-items: center; gap: 16rpx; }
+.qty-input { flex: 1; text-align: center; font-size: 34rpx; font-weight: 600; }
+.qty-btn {
+  margin: 0;
+  width: 80rpx; line-height: 80rpx;
+  padding: 0;
+  border-radius: 12rpx;
+  background: #e6f0ff; color: #1677ff;
+  font-size: 40rpx; font-weight: 700;
+}
+
+.picker {
+  background: #f5f7fa;
+  border-radius: 12rpx;
+  padding: 20rpx 24rpx;
+  font-size: 28rpx;
+  margin-bottom: 16rpx;
+  display: flex;
+  align-items: center;
+}
+.picker.placeholder { color: #8a94a6; }
+.p-label {
+  background: #dfe9f5;
+  color: #1677ff;
+  font-size: 22rpx;
+  border-radius: 6rpx;
+  padding: 2rpx 12rpx;
+  margin-right: 16rpx;
+}
+.input { background: #f5f7fa; border-radius: 12rpx; padding: 18rpx 24rpx; font-size: 28rpx; }
+
+.submit {
+  margin: 20rpx;
+  background: linear-gradient(90deg, #16a34a, #22c55e);
+  box-shadow: 0 10rpx 24rpx rgba(22,163,74,0.3);
+}

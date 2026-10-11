@@ -1,0 +1,76 @@
+<view class="page">
+  <!-- 列表视图 -->
+  <block wx:if="{{!detail}}">
+    <view class="card">
+      <view class="section-title">创建盘点单</view>
+      <picker mode="selector" range="{{warehouses}}" range-key="name" bindchange="onWarehouseChange">
+        <view class="picker {{warehouseId ? '' : 'placeholder'}}">{{warehouseName || '选择仓库'}}</view>
+      </picker>
+      <button class="btn-primary" loading="{{creating}}" bindtap="createOrder">创建盘点单（自动带入全部库存）</button>
+    </view>
+
+    <view class="card">
+      <view class="section-title">盘点单列表</view>
+      <view wx:if="{{orders.length === 0}}" class="muted">暂无盘点单</view>
+      <view wx:for="{{orders}}" wx:key="id" class="order-item" bindtap="openDetail" data-id="{{item.id}}">
+        <view class="o-head">
+          <text class="o-no">{{item.orderNo}}</text>
+          <text class="o-status st-{{item.status}}">{{item.statusText}}</text>
+        </view>
+        <view class="muted">{{item.warehouse.name}}　{{item.itemCount}} 个商品，已盘 {{item.countedCount}}</view>
+      </view>
+    </view>
+  </block>
+
+  <!-- 明细视图 -->
+  <block wx:else>
+    <view class="card">
+      <view class="o-head">
+        <view>
+          <text class="o-no">{{detail.orderNo}}</text>
+          <text class="o-status st-{{detail.status}}" style="margin-left: 16rpx;">{{detail.statusText}}</text>
+        </view>
+        <text class="link" bindtap="closeDetail">返回列表</text>
+      </view>
+      <view class="muted">{{detail.warehouse.name}}　共 {{detail.countItems.length}} 个商品</view>
+    </view>
+
+    <!-- 待开始：先开始盘点 -->
+    <view wx:if="{{detail.status === 'DRAFT'}}" class="card">
+      <view class="muted" style="margin-bottom: 16rpx;">盘点单已创建，点击下方按钮开始盘点后即可录入实盘数量。</view>
+      <button class="btn-primary" bindtap="startStocktake">开始盘点</button>
+    </view>
+
+    <!-- 盘点中：录入实盘 -->
+    <block wx:if="{{detail.status === 'COUNTING'}}">
+      <view class="card" wx:for="{{detail.countItems}}" wx:key="id">
+        <view class="ci-head">
+          <text class="ci-name">{{item.product.name}}</text>
+          <text class="muted">账面 {{item.systemQty}}</text>
+        </view>
+        <view class="muted">编码：{{item.product.code}}</view>
+        <view class="ci-row">
+          <input class="input qty" type="number" placeholder="实盘数量" value="{{item.countQty === null ? '' : item.countQty}}" bindinput="onCountInput" data-index="{{index}}" />
+          <button class="mini-btn" size="mini" bindtap="saveItem" data-index="{{index}}">保存</button>
+          <text wx:if="{{item.diffQty !== null && item.diffQty !== undefined}}" class="{{item.diffQty === 0 ? 'muted' : (item.diffQty > 0 ? 'success' : 'danger')}}">差异 {{item.diffQty > 0 ? '+' : ''}}{{item.diffQty}}</text>
+        </view>
+      </view>
+
+      <view class="card">
+        <button class="btn-primary" loading="{{settling}}" bindtap="settle">完成盘点并结算</button>
+      </view>
+    </block>
+
+    <!-- 已结算 -->
+    <block wx:if="{{detail.status === 'ADJUSTED'}}">
+      <view class="card" wx:for="{{detail.countItems}}" wx:key="id">
+        <view class="ci-head">
+          <text class="ci-name">{{item.product.name}}</text>
+          <text class="muted">账面 {{item.systemQty}} → 实盘 {{item.countQty}}</text>
+        </view>
+        <text class="{{item.diffQty === 0 ? 'muted' : (item.diffQty > 0 ? 'success' : 'danger')}}">差异 {{item.diffQty > 0 ? '+' : ''}}{{item.diffQty}}</text>
+      </view>
+      <view class="card"><text class="success">该盘点单已结算，库存已按差异调整</text></view>
+    </block>
+  </block>
+</view>

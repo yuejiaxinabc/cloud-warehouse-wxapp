@@ -1,0 +1,35 @@
+.page { padding-bottom: 60rpx; }
+
+.user-card { display: flex; align-items: center; gap: 24rpx; }
+.avatar {
+  width: 110rpx; height: 110rpx;
+  background: linear-gradient(135deg, #1677ff, #6fb1ff);
+  color: #fff;
+  border-radius: 28rpx;
+  text-align: center;
+  line-height: 110rpx;
+  font-size: 48rpx;
+  font-weight: 700;
+}
+.user-name { font-size: 34rpx; font-weight: 700; }
+.role-tags { margin-top: 8rpx; display: flex; gap: 10rpx; flex-wrap: wrap; }
+.role-tag {
+  background: #e6f0ff;
+  color: #1677ff;
+  font-size: 22rpx;
+  border-radius: 8rpx;
+  padding: 4rpx 14rpx;
+}
+
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 26rpx 8rpx;
+  border-bottom: 1rpx solid #eef2f7;
+  font-size: 30rpx;
+}
+.menu-item:last-child { border-bottom: none; }
+.arrow { color: #c0c8d4; font-size: 36rpx; }
+
+.footer { text-align: center; padding: 30rpx 0; }

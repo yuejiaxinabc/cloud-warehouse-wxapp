@@ -1,0 +1,57 @@
+<view class="page">
+  <!-- 商品选择 -->
+  <view class="card">
+    <view class="step-tag">1</view>
+    <view class="section-title">选择商品</view>
+    <view class="scan-row">
+      <input class="input flex1" placeholder="输入名称/编码搜索，或扫码" value="{{code}}" bindinput="onCodeInput" bindconfirm="lookupProduct" />
+      <button class="scan-btn" bindtap="scanProduct">扫码</button>
+    </view>
+
+    <view wx:if="{{suggestions.length > 0 && !product}}" class="suggest">
+      <view wx:for="{{suggestions}}" wx:key="id" class="suggest-item" bindtap="pickSuggestion" data-index="{{index}}">
+        <view class="p-row">
+          <view class="s-name">{{item.name}}</view>
+          <view class="s-stock">库存 {{item.totalStock}}</view>
+        </view>
+        <view class="s-meta muted">{{item.code || '-'}}</view>
+      </view>
+    </view>
+
+    <view wx:if="{{product}}" class="product-box">
+      <view class="p-row">
+        <view class="p-name">{{product.name}}</view>
+        <button class="clear-btn" size="mini" bindtap="clearProduct">重选</button>
+      </view>
+      <view class="muted">编码：{{product.code || '-'}}　总库存：{{product.totalStock}}</view>
+      <view wx:if="{{product.warehouses.length > 0}}" class="wh-line muted">
+        <text wx:for="{{product.warehouses}}" wx:key="warehouseId" class="wh-chip">{{item.warehouseName}} {{item.onHand}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 数量 -->
+  <view class="card">
+    <view class="step-tag">2</view>
+    <view class="section-title">出库数量</view>
+    <view class="qty-row">
+      <button class="qty-btn" bindtap="decQty">−</button>
+      <input class="input qty-input" type="number" value="{{quantity}}" bindinput="onQtyInput" />
+      <button class="qty-btn" bindtap="incQty">＋</button>
+    </view>
+  </view>
+
+  <!-- 仓库与备注 -->
+  <view class="card">
+    <view class="step-tag">3</view>
+    <view class="section-title">出库仓库（默认从库存最多的仓出）</view>
+    <picker mode="selector" range="{{warehouses}}" range-key="name" bindchange="onWarehouseChange">
+      <view class="picker">
+        <text class="p-label">仓库</text>{{warehouseName || '自动选择'}}
+      </view>
+    </picker>
+    <input class="input" placeholder="备注（选填）" value="{{remark}}" bindinput="onRemarkInput" />
+  </view>
+
+  <button class="btn-primary submit" loading="{{submitting}}" bindtap="submit">确认出库</button>
+</view>

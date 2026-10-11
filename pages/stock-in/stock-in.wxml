@@ -1,0 +1,65 @@
+<view class="page">
+  <!-- 商品选择 -->
+  <view class="card">
+    <view class="step-tag">1</view>
+    <view class="section-title">选择商品</view>
+    <view class="scan-row">
+      <input class="input flex1" placeholder="输入名称/编码搜索，或扫码" value="{{code}}" bindinput="onCodeInput" bindconfirm="lookupProduct" />
+      <button class="scan-btn" bindtap="scanProduct">扫码</button>
+    </view>
+
+    <!-- 搜索建议 -->
+    <view wx:if="{{suggestions.length > 0 && !product}}" class="suggest">
+      <view wx:for="{{suggestions}}" wx:key="id" class="suggest-item" bindtap="pickSuggestion" data-index="{{index}}">
+        <view class="s-name">{{item.name}}</view>
+        <view class="s-meta muted">{{item.code || '-'}}　库存 {{item.totalStock}}</view>
+      </view>
+    </view>
+
+    <view wx:if="{{product}}" class="product-box">
+      <view class="p-row">
+        <view class="p-name">{{product.name}}</view>
+        <button class="clear-btn" size="mini" bindtap="clearProduct">重选</button>
+      </view>
+      <view class="muted">编码：{{product.code || '-'}}　当前库存：{{product.totalStock}}</view>
+    </view>
+  </view>
+
+  <!-- 数量 -->
+  <view class="card">
+    <view class="step-tag">2</view>
+    <view class="section-title">入库数量</view>
+    <view class="qty-row">
+      <button class="qty-btn" bindtap="decQty">−</button>
+      <input class="input qty-input" type="number" value="{{quantity}}" bindinput="onQtyInput" />
+      <button class="qty-btn" bindtap="incQty">＋</button>
+    </view>
+  </view>
+
+  <!-- 入库位置 -->
+  <view class="card">
+    <view class="step-tag">3</view>
+    <view class="section-title">入库位置</view>
+    <view class="scan-row" style="margin-bottom: 16rpx;">
+      <button class="scan-btn wide" bindtap="scanBox">📷 扫盒子码自动定位（如 A-1-1-1）</button>
+    </view>
+    <picker mode="selector" range="{{warehouses}}" range-key="name" bindchange="onWarehouseChange">
+      <view class="picker {{form.warehouseId ? '' : 'placeholder'}}">
+        <text class="p-label">仓库</text>{{warehouseName || '请选择仓库'}}
+      </view>
+    </picker>
+    <picker mode="selector" range="{{locations}}" range-key="code" bindchange="onLocationChange" disabled="{{!form.warehouseId}}">
+      <view class="picker {{form.locationId ? '' : 'placeholder'}}">
+        <text class="p-label">货位</text>{{locationCode || '先选仓库'}}
+      </view>
+    </picker>
+    <picker mode="selector" range="{{boxes}}" range-key="code" bindchange="onBoxChange" disabled="{{!form.locationId}}">
+      <view class="picker {{form.boxId ? '' : 'placeholder'}}">
+        <text class="p-label">盒子</text>{{boxCode || '先选货位'}}
+      </view>
+    </picker>
+    <input class="input" placeholder="备注（选填）" value="{{remark}}" bindinput="onRemarkInput" />
+  </view>
+
+  <button class="btn-primary submit" loading="{{submitting}}" bindtap="submit">确认入库</button>
+</view>
