@@ -1,7 +1,8 @@
 # 📱 云仓小程序端（独立项目）
 
 > 「云仓智能仓储管理平台」的微信小程序客户端，**独立仓库/独立项目**，通过 HTTPS 调用云仓服务端的开放接口（`/api/v1/mp/*`）。
-> 服务端主项目（Next.js Web 端）另行部署，本小程序不含后端代码。
+>
+> 🔗 **服务端主项目**：<https://github.com/yuejiaxinabc/cloud-warehouse>（Next.js Web 端 + 后端，本小程序不含后端代码）
 
 原生微信小程序开发（无第三方框架），共 7 个页面，围绕仓库现场的高频操作设计：**扫码收发货、扫码盘点、随手采购申请**。
 
@@ -93,4 +94,4 @@ const BASE_URL = 'https://your-domain.example.com';
 
 ## 📄 许可证
 
-与服务端主项目一致（MIT）。
+与服务端主项目 [cloud-warehouse](https://github.com/yuejiaxinabc/cloud-warehouse) 一致（MIT）。
